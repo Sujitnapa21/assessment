@@ -6,8 +6,8 @@ var products = [
     img: "https://static.qobuz.com/images/covers/aa/y4/grkutz2qry4aa_600.jpg",
     artist: "EXO",
     albumname: "EXO-K Vol.1 [MAMA]",
-    sales: "9,812",
-    date: "Sales 2012-04-10",
+    sales: "Sales 9,812",
+    date: " 2012-04-10",
     price: "USD 8.7",
   },
   {
@@ -19,7 +19,7 @@ var products = [
     price: "USD 8.7",
   },
   {
-    img:"https://i1.sndcdn.com/artworks-000121585645-y1jaxk-t500x500.jpg",
+    img: "https://i1.sndcdn.com/artworks-000121585645-y1jaxk-t500x500.jpg",
     artist: "EXO",
     albumname: "EXO-K Vol.1[XOXO-HUG Ver]",
     sales: "Sales 3,515",
@@ -50,7 +50,6 @@ var products = [
     date: "2018-11-02",
     price: "USD 18.02",
   },
-  ,
   {
     img: "https://musicnook.co/wp-content/uploads/2018/12/EXO-Love-Shot-The-5th-Album-Repackage.jpg",
     artist: "EXO",
@@ -58,9 +57,7 @@ var products = [
     sales: "Sales 82,563",
     date: "2019-11-28",
     price: "USD 20.73",
-  }
-
-
+  },
 ];
 
 render(products);
@@ -74,27 +71,56 @@ function render(product) {
     />
     <h2 class="exo">${products[i].artist}</h2>
     <h2>${products[i].albumname}</h2>
-
     <h4 class="exo">${products[i].sales}</h4>
     <h4>${products[i].date}</h4>
     <br /> 
-    <button onclick="onClickProductItem(${products[i]})">Test</button>
-
+    <button onclick="onClickProductItem(${i})">Add</button>
     <h3><b>${products[i].price}</b></h3>
   </div>`;
-  document.getElementById("all_products").innerHTML += str;
+    document.getElementById("all_products").innerHTML += str;
   }
 }
 
-function onClickProductItem(e){
-  
-  alert(e);
-
-
+let cart = [];
+function onClickProductItem(e) {
+  cart.push(products[e]);
+  console.log(cart);
 }
 // Next/previous controls
 function plusSlides(n) {
   showSlides((slideIndex += n));
+}
+
+function onClickOpenCart(value) {
+  var carts = document.getElementById("modal-cart");
+  carts.style.display = value ? "block" : "none";
+  renderProductItem();
+}
+
+function renderProductItem() {
+  var prod = [];
+  var str;
+  var list = document.getElementById("cart-list");
+  console.log(cart);
+  if (cart.length == 0) {
+    str = `<div class="empty-item" >
+      <div><p>No Product in Cart</p></div>
+      
+      
+    </div>`;
+    list.innerHTML = str;
+  } else {
+    list.innerHTML = ""
+    cart.map((val, i) => {
+      str = `<div class="cart-item" >
+      <div><img alt=${i} src=${val?.img} loading="lazy"/></div>
+      <div><p>${val.albumname}</p><p>${val.price}</p></div>
+      
+      
+    </div>`;
+      list.innerHTML += str;
+    });
+  }
 }
 
 // Thumbnail image controls
@@ -120,9 +146,4 @@ function showSlides(n) {
   }
   slides[slideIndex - 1].style.display = "block";
   dots[slideIndex - 1].className += " active";
-}
-
-function orderInCart(){
-  var item;
-  
 }
