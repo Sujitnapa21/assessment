@@ -1,6 +1,5 @@
 var slideIndex = 1;
 showSlides(slideIndex);
-alert(slideIndex);
 
 // Next/previous controls
 function plusSlides(n) {
